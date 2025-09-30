@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: liste/recherche/pagination des cours avec suppression.
-namespace App\Http\Livewire\Courses;
+namespace App\Livewire\Courses;
 
 use App\Models\Course;
 use Livewire\Attributes\Layout;

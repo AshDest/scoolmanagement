@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: formulaire création/édition d'un étudiant avec validation.
-namespace App\Http\Livewire\Students;
+namespace App\Livewire\Students;
 
 use App\Models\SchoolClass;
 use App\Models\Student;

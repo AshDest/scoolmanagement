@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: formulaire création/édition d'un cours avec validation.
-namespace App\Http\Livewire\Courses;
+namespace App\Livewire\Courses;
 
 use App\Models\Course;
 use Illuminate\Validation\Rule;

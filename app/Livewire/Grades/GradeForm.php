@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: saisie/mise à jour d'une note pour une inscription.
-namespace App\Http\Livewire\Grades;
+namespace App\Livewire\Grades;
 
 use App\Models\Enrollment;
 use App\Models\Grade;

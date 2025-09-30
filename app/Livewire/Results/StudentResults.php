@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: affiche la synthèse des résultats d'un étudiant connecté ou choisi.
-namespace App\Http\Livewire\Results;
+namespace App\Livewire\Results;
 
 use App\Models\Student;
 use Livewire\Attributes\Layout;

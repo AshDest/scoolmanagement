@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: formulaire création/édition d'un enseignant (user + rôle).
-namespace App\Http\Livewire\Teachers;
+namespace App\Livewire\Teachers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

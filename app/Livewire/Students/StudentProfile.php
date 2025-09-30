@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: visualisation d'un profil étudiant avec inscriptions et notes.
-namespace App\Http\Livewire\Students;
+namespace App\Livewire\Students;
 
 use App\Models\Student;
 use Livewire\Attributes\Layout;

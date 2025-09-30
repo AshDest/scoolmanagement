@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: liste des enseignants (users avec rôle teacher).
-namespace App\Http\Livewire\Teachers;
+namespace App\Livewire\Teachers;
 
 use App\Models\User;
 use Livewire\Attributes\Layout;

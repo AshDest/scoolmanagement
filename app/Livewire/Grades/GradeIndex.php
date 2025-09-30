@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: liste des notes filtrées par cours/session et étudiant.
-namespace App\Http\Livewire\Grades;
+namespace App\Livewire\Grades;
 
 use App\Models\CourseOffering;
 use App\Models\Enrollment;

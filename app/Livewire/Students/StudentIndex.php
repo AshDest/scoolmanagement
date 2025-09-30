@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: liste/recherche/pagination des étudiants avec suppression.
-namespace App\Http\Livewire\Students;
+namespace App\Livewire\Students;
 
 use App\Models\SchoolClass;
 use App\Models\Student;

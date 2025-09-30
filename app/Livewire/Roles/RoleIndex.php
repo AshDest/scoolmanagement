@@ -1,6 +1,6 @@
 <?php
 // Composant Livewire: gestion simple des rôles Spatie et assignation aux utilisateurs.
-namespace App\Http\Livewire\Roles;
+namespace App\Livewire\Roles;
 
 use App\Models\User;
 use Livewire\Attributes\Layout;

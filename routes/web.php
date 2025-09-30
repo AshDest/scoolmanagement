@@ -1,12 +1,12 @@
 <?php
 // Routes web: pages Livewire protégées par auth et liens vers modules.
-use App\Http\Livewire\Courses\CourseIndex;
-use App\Http\Livewire\Grades\GradeIndex;
-use App\Http\Livewire\Results\StudentResults;
-use App\Http\Livewire\Roles\RoleIndex;
-use App\Http\Livewire\Students\StudentIndex;
-use App\Http\Livewire\Students\StudentProfile;
-use App\Http\Livewire\Teachers\TeacherIndex;
+use App\Livewire\Courses\CourseIndex;
+use App\Livewire\Grades\GradeIndex;
+use App\Livewire\Results\StudentResults;
+use App\Livewire\Roles\RoleIndex;
+use App\Livewire\Students\StudentIndex;
+use App\Livewire\Students\StudentProfile;
+use App\Livewire\Teachers\TeacherIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return redirect()->route('students.index'); });

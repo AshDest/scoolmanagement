@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('course_offering_id')->constrained()->cascadeOnDelete();
+            $table->string('status')->default('enrolled');
+            $table->json('meta')->nullable();
             $table->timestamps();
+            $table->unique(['student_id','course_offering_id']);
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
     }
 

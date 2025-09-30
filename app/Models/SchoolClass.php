@@ -1,5 +1,5 @@
 <?php
-// Modèle: matière enseignée, avec meta JSON et soft deletes.
+// Modèle: représente une classe (groupe d'élèves) avec meta JSON.
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Course extends Model
+class SchoolClass extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code','title','description','credits','meta'];
+    protected $table = 'classes';
+    protected $fillable = ['name','level','meta'];
     protected $casts = ['meta' => 'array'];
 
-    public function offerings(): HasMany { return $this->hasMany(CourseOffering::class); }
+    public function students(): HasMany { return $this->hasMany(Student::class, 'class_id'); }
 }

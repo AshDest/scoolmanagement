@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('enrollment_id')->constrained()->cascadeOnDelete();
+            $table->decimal('score', 5, 2)->nullable();
+            $table->string('letter')->nullable();
+            $table->json('meta')->nullable();
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
     }
 

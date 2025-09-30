@@ -13,7 +13,7 @@ Route::get('/', function () { return redirect()->route('students.index'); });
 
 Auth::routes(); // laravel/ui bootstrap --auth
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','ensure.role:admin'])->group(function () {
     Route::get('/students', StudentIndex::class)->name('students.index');
     Route::get('/students/{studentId}', StudentProfile::class)->name('students.profile');
 

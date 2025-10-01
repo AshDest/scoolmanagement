@@ -8,6 +8,34 @@
     @auth
         <nav class="flex-grow-1">
             <ul class="nav nav-pills flex-column gap-1">
+                {{-- Ajout du menu Dashboards --}}
+                <li class="nav-item mt-2">
+                    <div class="small text-uppercase text-muted px-2 mb-1">Dashboards</div>
+                </li>
+                @role('admin')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('dashboard.admin') ? 'active' : '' }}" href="{{ route('dashboard.admin') }}">
+                        <span class="icon"><i class="bi bi-speedometer2"></i></span>
+                        <span>Admin</span>
+                    </a>
+                </li>
+                @endrole
+                @role('teacher')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('dashboard.teacher') ? 'active' : '' }}" href="{{ route('dashboard.teacher') }}">
+                        <span class="icon"><i class="bi bi-speedometer"></i></span>
+                        <span>Enseignant</span>
+                    </a>
+                </li>
+                @endrole
+                @role('student')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('dashboard.student') ? 'active' : '' }}" href="{{ route('dashboard.student') }}">
+                        <span class="icon"><i class="bi bi-speedometer"></i></span>
+                        <span>Étudiant</span>
+                    </a>
+                </li>
+                @endrole
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('students.*') ? 'active' : '' }}" href="{{ route('students.index') }}">
                         <span class="icon"><i class="bi bi-people-fill"></i></span>

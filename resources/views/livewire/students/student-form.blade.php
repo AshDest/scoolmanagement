@@ -58,7 +58,10 @@
     document.addEventListener('livewire:init', () => {
         Livewire.on('close-student-modal', () => {
             const el = document.getElementById('studentFormModal');
-            if (el) bootstrap.Modal.getInstance(el)?.hide();
+            if (el) {
+                const m = bootstrap.Modal.getInstance(el) ?? bootstrap.Modal.getOrCreateInstance(el);
+                m.hide();
+            }
         });
     });
 </script>

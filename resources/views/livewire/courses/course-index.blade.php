@@ -1,15 +1,28 @@
-{{-- Vue: affiche la liste des cours avec recherche et actions CRUD. --}}
+{{-- Vue: liste des cours avec ouverture du modal via Bootstrap + Livewire dispatch. --}}
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Cours</h1>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courseFormModal" wire:click="$emit('open-course-form', null)">Nouveau</button>
+        <button
+            class="btn btn-primary"
+            onclick="
+        window.Livewire.dispatch('open-course-form', { id: null });
+        const el = document.getElementById('courseFormModal');
+        const m = bootstrap.Modal.getOrCreateInstance(el);
+        m.show();
+      "
+        >
+            Nouveau
+        </button>
     </div>
+
     @if (session('status')) <div class="alert alert-success">{{ session('status') }}</div> @endif
+
     <div class="row g-2 mb-3">
         <div class="col-md-6">
             <input type="text" class="form-control" placeholder="Rechercher..." wire:model.debounce.400ms="search">
         </div>
     </div>
+
     <div class="table-responsive">
         <table class="table table-striped align-middle">
             <thead><tr><th>#</th><th>Code</th><th>Titre</th><th>Crédits</th><th></th></tr></thead>
@@ -21,7 +34,15 @@
                     <td>{{ $c->title }}</td>
                     <td>{{ $c->credits }}</td>
                     <td class="text-end">
-                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#courseFormModal" wire:click="$emit('open-course-form', {{ $c->id }})">Modifier</button>
+                        <button
+                            class="btn btn-sm btn-outline-secondary"
+                            onclick="
+                window.Livewire.dispatch('open-course-form', { id: {{ $c->id }} });
+                const el = document.getElementById('courseFormModal');
+                const m = bootstrap.Modal.getOrCreateInstance(el);
+                m.show();
+              "
+                        >Modifier</button>
                         <button class="btn btn-sm btn-outline-danger" wire:click="delete({{ $c->id }})" onclick="return confirm('Supprimer ce cours ?')">Supprimer</button>
                     </td>
                 </tr>
@@ -31,6 +52,8 @@
             </tbody>
         </table>
     </div>
+
     {{ $courses->links() }}
+
     @livewire('courses.course-form')
 </div>

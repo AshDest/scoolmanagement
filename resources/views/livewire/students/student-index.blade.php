@@ -2,7 +2,15 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Étudiants</h1>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentFormModal" wire:click="$emit('open-student-form', null)">
+        <button
+            class="btn btn-primary"
+            onclick="
+        window.Livewire.dispatch('open-student-form', { id: null });
+        const el = document.getElementById('studentFormModal');
+        const m = bootstrap.Modal.getOrCreateInstance(el);
+        m.show();
+      "
+        >
             Nouveau
         </button>
     </div>
@@ -41,8 +49,17 @@
                     <td>{{ $s->class?->name ?? '-' }}</td>
                     <td class="text-end">
                         <a class="btn btn-sm btn-outline-info" href="{{ route('students.profile', $s->id) }}">Profil</a>
-                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#studentFormModal"
-                                wire:click="$emit('open-student-form', {{ $s->id }})">Modifier</button>
+                        <button
+                            class="btn btn-sm btn-outline-secondary"
+                            onclick="
+                window.Livewire.dispatch('open-student-form', { id: {{ $s->id }} });
+                const el = document.getElementById('studentFormModal');
+                const m = bootstrap.Modal.getOrCreateInstance(el);
+                m.show();
+              "
+                        >
+                            Modifier
+                        </button>
                         <button class="btn btn-sm btn-outline-danger" wire:click="delete({{ $s->id }})"
                                 onclick="return confirm('Supprimer cet étudiant ?')">Supprimer</button>
                     </td>

@@ -1,8 +1,7 @@
 <?php
-// Composant Livewire: saisie/mise à jour d'une note pour une inscription.
+// Composant Livewire: remplace $emit par dispatch pour fermeture/rafraîchissement.
 namespace App\Livewire\Grades;
 
-use App\Models\Enrollment;
 use App\Models\Grade;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -18,7 +17,7 @@ class GradeForm extends Component
     {
         $this->resetValidation();
         $this->enrollment_id = $enrollmentId;
-        $grade = Grade::where('enrollment_id',$enrollmentId)->first();
+        $grade = Grade::where('enrollment_id', $enrollmentId)->first();
         $this->score = $grade?->score;
         $this->letter = $grade?->letter;
     }
@@ -31,10 +30,10 @@ class GradeForm extends Component
             'letter' => ['nullable','string','max:3'],
         ]);
 
-        Grade::updateOrCreate(['enrollment_id' => $data['enrollment_id']], [
-            'score' => $data['score'],
-            'letter' => $data['letter'],
-        ]);
+        Grade::updateOrCreate(
+            ['enrollment_id' => $data['enrollment_id']],
+            ['score' => $data['score'], 'letter' => $data['letter']]
+        );
 
         session()->flash('status', 'Note enregistrée.');
         $this->dispatch('grade-saved');

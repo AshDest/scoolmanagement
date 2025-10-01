@@ -1,8 +1,9 @@
-{{-- Vue: liste des notes avec filtres et bouton d'édition. --}}
+{{-- Vue: liste des notes avec ouverture du modal de saisie via Bootstrap + Livewire dispatch. --}}
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Notes</h1>
     </div>
+
     <div class="row g-2 mb-3">
         <div class="col-md-4">
             <select class="form-select" wire:model="offeringId">
@@ -29,8 +30,15 @@
                     <td>{{ $en->grade?->score ?? '-' }}</td>
                     <td>{{ $en->grade?->letter ?? '-' }}</td>
                     <td class="text-end">
-                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#gradeFormModal"
-                                wire:click="$emit('open-grade-form', {{ $en->id }})">Saisir/Modifier</button>
+                        <button
+                            class="btn btn-sm btn-outline-secondary"
+                            onclick="
+                window.Livewire.dispatch('open-grade-form', {{ $en->id }});
+                const el = document.getElementById('gradeFormModal');
+                const m = bootstrap.Modal.getOrCreateInstance(el);
+                m.show();
+              "
+                        >Saisir/Modifier</button>
                     </td>
                 </tr>
             @empty
@@ -43,6 +51,4 @@
     {{ $rows->links() }}
 
     @livewire('grades.grade-form')
-</div><div>
-    {{-- In work, do what you enjoy. --}}
 </div>

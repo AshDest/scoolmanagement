@@ -1,5 +1,5 @@
 <?php
-// Composant Livewire: formulaire création/édition d'un enseignant (user + rôle).
+// Composant Livewire: remplace $emit par dispatch pour fermeture/rafraîchissement.
 namespace App\Livewire\Teachers;
 
 use App\Models\User;

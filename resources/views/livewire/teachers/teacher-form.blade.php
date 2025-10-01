@@ -1,4 +1,4 @@
-{{-- Vue: modal Bootstrap pour créer/éditer un enseignant. --}}
+{{-- Vue: modal Bootstrap pour créer/éditer un enseignant + écoute de fermeture. --}}
 <div wire:ignore.self class="modal fade" id="teacherFormModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -37,7 +37,10 @@
     document.addEventListener('livewire:init', () => {
         Livewire.on('close-teacher-modal', () => {
             const el = document.getElementById('teacherFormModal');
-            if (el) bootstrap.Modal.getInstance(el)?.hide();
+            if (el) {
+                const m = bootstrap.Modal.getInstance(el) ?? bootstrap.Modal.getOrCreateInstance(el);
+                m.hide();
+            }
         });
     });
 </script>

@@ -1,5 +1,5 @@
 <?php
-// Composant Livewire: formulaire création/édition d'un cours avec validation.
+// Composant Livewire: remplace $emit par dispatch pour fermeture/rafraîchissement.
 namespace App\Livewire\Courses;
 
 use App\Models\Course;
@@ -25,7 +25,7 @@ class CourseForm extends Component
             $this->code = $c->code;
             $this->title = $c->title;
             $this->description = $c->description;
-            $this->credits = (int)$c->credits;
+            $this->credits = (int) $c->credits;
         } else {
             $this->reset(['id','code','title','description','credits']);
             $this->credits = 0;

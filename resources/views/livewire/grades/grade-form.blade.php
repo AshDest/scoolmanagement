@@ -1,4 +1,4 @@
-{{-- Vue: modal Bootstrap pour saisir une note. --}}
+{{-- Vue: modal Bootstrap pour saisir une note + écoute de fermeture. --}}
 <div wire:ignore.self class="modal fade" id="gradeFormModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -33,7 +33,10 @@
     document.addEventListener('livewire:init', () => {
         Livewire.on('close-grade-modal', () => {
             const el = document.getElementById('gradeFormModal');
-            if (el) bootstrap.Modal.getInstance(el)?.hide();
+            if (el) {
+                const m = bootstrap.Modal.getInstance(el) ?? bootstrap.Modal.getOrCreateInstance(el);
+                m.hide();
+            }
         });
     });
 </script>

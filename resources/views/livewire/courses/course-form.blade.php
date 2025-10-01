@@ -1,4 +1,4 @@
-{{-- Vue: modal Bootstrap pour créer/éditer un cours avec erreurs de validation. --}}
+{{-- Vue: modal Bootstrap pour créer/éditer un cours + écoute de fermeture. --}}
 <div wire:ignore.self class="modal fade" id="courseFormModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -41,7 +41,10 @@
     document.addEventListener('livewire:init', () => {
         Livewire.on('close-course-modal', () => {
             const el = document.getElementById('courseFormModal');
-            if (el) bootstrap.Modal.getInstance(el)?.hide();
+            if (el) {
+                const m = bootstrap.Modal.getInstance(el) ?? bootstrap.Modal.getOrCreateInstance(el);
+                m.hide();
+            }
         });
     });
 </script>

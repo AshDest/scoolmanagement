@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  app:
+    image: ghcr.io/school/school-backend:latest
+    restart: always
+    env_file:
+      - .env.prod
+    volumes:
+      - storage:/var/www/html/storage
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: RootPass123!
+      MYSQL_DATABASE: school
+      MYSQL_USER: school
+      MYSQL_PASSWORD: SchoolDBPass123!
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  storage:
+  mysql_data:

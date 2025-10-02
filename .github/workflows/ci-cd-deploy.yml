@@ -1,0 +1,67 @@
+name: CI/CD - Build & Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build_and_push:
+    name: Build and push image
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }} # set this secret in GitHub
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/school-backend:latest
+            ghcr.io/${{ github.repository_owner }}/school-backend:${{ github.sha }}
+
+  deploy:
+    name: Deploy to VPS via SSH
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy - pull & restart
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=yes $VPS_USER@$VPS_HOST << 'EOF'
+            cd /home/deploy/apps/school || exit 1
+            docker compose pull
+            docker compose up -d --remove-orphans
+            # optional: run migrations if container supports it
+            # docker compose exec -T app php artisan migrate --force
+            EOF

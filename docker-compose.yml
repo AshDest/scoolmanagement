@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+    app:
+        image: ghcr.io/TON_USER/school-backend:latest
+        build: .
+        environment:
+            - APP_ENV=production
+            - DB_HOST=db
+            - DB_DATABASE=school
+            - DB_USERNAME=school
+            - DB_PASSWORD=SchoolDBPass123!
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - db
+        ports:
+            - "8000:80" # si tu exposes via nginx in container
+
+    db:
+        image: mysql:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD:RootPass123!
+            MYSQL_DATABASE: school
+            MYSQL_USER: school
+            MYSQL_PASSWORD: SchoolDBPass123!
+        volumes:
+            - mysql_data:/var/lib/mysql
+volumes:
+    mysql_data:

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return redirect()->route('students.index'); });
 
-Auth::routes(); // laravel/ui bootstrap --auth
+//Auth::routes(); // laravel/ui bootstrap --auth
 
 Route::get('/home', function () {
     $u = auth()->user();

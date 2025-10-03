@@ -8,7 +8,6 @@ jobs:
   build_and_push:
     name: Build and push image
     runs-on: [ self-hosted, deploy-vps ]
-
     permissions:
       packages: write
       contents: read
@@ -16,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
+      - name: Set up QEMU (optional, for multi-arch)
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
@@ -27,9 +26,9 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }} # set this secret in GitHub
+          password: ${{ secrets.GHCR_PAT }}
 
-      - name: Build and push
+      - name: Build and push image
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -40,29 +39,24 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/school-backend:${{ github.sha }}
 
   deploy:
-    name: Deploy to VPS via SSH
+    name: Deploy (on self-hosted runner)
     needs: build_and_push
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, deploy-vps ]
     steps:
-      - name: Install SSH client
-        run: sudo apt-get update && sudo apt-get install -y openssh-client
+      - name: Checkout (for any deploy artifacts)
+        uses: actions/checkout@v4
 
-      - name: Setup SSH key
+      - name: Pull images and restart services
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
-          chmod 600 ~/.ssh/id_deploy
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          # aller dans le dossier où est ton docker-compose prod
+          cd /home/deploy/apps/school || exit 1
 
-      - name: Deploy - pull & restart
-        env:
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-        run: |
-          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=yes $VPS_USER@$VPS_HOST << 'EOF'
-            cd /home/deploy/apps/school || exit 1
-            docker compose pull
-            docker compose up -d --remove-orphans
-            # optional: run migrations if container supports it
-            # docker compose exec -T app php artisan migrate --force
-            EOF
+          # s'assurer que docker compose est accessible
+          docker compose version
+
+          # pull et redémarrer
+          docker compose pull
+          docker compose up -d --remove-orphans
+
+          # optional: run migrations (décommenter si voulu)
+          # docker compose exec -T app php artisan migrate --force

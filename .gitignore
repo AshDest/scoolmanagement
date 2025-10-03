@@ -5,6 +5,11 @@
 .env.production
 .phpactor.json
 .phpunit.result.cache
+# Fichiers serveur
+.env.prod
+docker-compose.local.yml
+docker-compose.prod.yml.bak
+nginx/
 /.fleet
 /.idea
 /.nova

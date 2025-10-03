@@ -7,7 +7,7 @@ on:
 jobs:
   build_and_push:
     name: Build and push image
-    runs-on: self-hosted, linux, x64
+    runs-on: [ self-hosted, deploy-vps ]
 
     permissions:
       packages: write

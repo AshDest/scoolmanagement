@@ -41,3 +41,7 @@ Route::middleware(['auth','ensure.role:admin'])->group(function () {
     Route::get('/dashboard/teacher', TeacherDashboard::class)->name('dashboard.teacher');
     Route::get('/dashboard/student', StudentDashboard::class)->name('dashboard.student');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

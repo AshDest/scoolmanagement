@@ -1,29 +1,43 @@
-version: '3.8'
 services:
     app:
-        image: ghcr.io/TON_USER/school-backend:latest
-        build: .
-        environment:
-            - APP_ENV=production
-            - DB_HOST=db
-            - DB_DATABASE=school
-            - DB_USERNAME=school
-            - DB_PASSWORD=SchoolDBPass123!
+        build:
+            context: .
+            dockerfile: Dockerfile.app
+        container_name: school-app
+        env_file: .env
         volumes:
-            - ./:/var/www/html
+            - .:/var/www/html
         depends_on:
-            - db
-        ports:
-            - "8000:80" # si tu exposes via nginx in container
+            mysql:
+                condition: service_healthy
 
-    db:
+    nginx:
+        image: nginx:1.25-alpine
+        container_name: school-nginx
+        ports:
+            - "80:80"
+        volumes:
+            - .:/var/www/html
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+        depends_on:
+            - app
+
+    mysql:
         image: mysql:8.0
+        container_name: school-mysql
+        command: --default-authentication-plugin=mysql_native_password --sql-mode=""
         environment:
-            MYSQL_ROOT_PASSWORD:RootPass123!
-            MYSQL_DATABASE: school
-            MYSQL_USER: school
-            MYSQL_PASSWORD: SchoolDBPass123!
+            MYSQL_DATABASE: school_db
+            MYSQL_USER: school_user
+            MYSQL_PASSWORD: school_pass
+            MYSQL_ROOT_PASSWORD: rootpass
         volumes:
             - mysql_data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-prootpass"]
+            interval: 5s
+            timeout: 3s
+            retries: 20
+
 volumes:
     mysql_data:

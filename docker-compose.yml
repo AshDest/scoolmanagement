@@ -1,8 +1,6 @@
 services:
     app:
-        build:
-            context: .
-            dockerfile: Dockerfile.app
+        image: php:8.2-fpm
         container_name: school-app
         env_file: .env
         volumes:

@@ -10,6 +10,11 @@ use App\Livewire\Teachers\TeacherIndex;
 use App\Livewire\Dashboards\AdminDashboard;
 use App\Livewire\Dashboards\TeacherDashboard;
 use App\Livewire\Dashboards\StudentDashboard;
+use App\Livewire\Grading\GradeSchemeIndex;
+use App\Livewire\Grading\GradeEntry;
+use App\Livewire\Enrollments\EnrollmentIndex;
+use App\Livewire\Classes\ClassIndex;
+use App\Livewire\Offerings\OfferingIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return redirect()->route('students.index'); });
@@ -40,6 +45,12 @@ Route::middleware(['auth','ensure.role:admin'])->group(function () {
     Route::get('/dashboard/admin', AdminDashboard::class)->name('dashboard.admin');
     Route::get('/dashboard/teacher', TeacherDashboard::class)->name('dashboard.teacher');
     Route::get('/dashboard/student', StudentDashboard::class)->name('dashboard.student');
+
+    Route::get('/grading/schemes', GradeSchemeIndex::class)->name('grading.schemes');
+    Route::get('/grading/entry', GradeEntry::class)->name('grading.entry');
+    Route::get('/enrollments/all', EnrollmentIndex::class)->name('enrollments.all');
+    Route::get('/classes', ClassIndex::class)->name('classes.index');
+    Route::get('/offerings', OfferingIndex::class)->name('offerings.index');
 });
 
 Auth::routes();

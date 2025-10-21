@@ -43,15 +43,49 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('enrollments.all') ? 'active' : '' }}" href="{{ route('enrollments.all') }}">
+                        <span class="icon"><i class="bi bi-clipboard-data"></i></span>
+                        <span>Inscriptions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('classes.index') ? 'active' : '' }}" href="{{ route('classes.index') }}">
+                        <span class="icon"><i class="bi bi-building"></i></span>
+                        <span>Classes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}" href="{{ route('courses.index') }}">
                         <span class="icon"><i class="bi bi-book-half"></i></span>
                         <span>Cours</span>
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('offerings.index') ? 'active' : '' }}" href="{{ route('offerings.index') }}">
+                        <span class="icon"><i class="bi bi-calendar3"></i></span>
+                        <span>Sessions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('teachers.*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">
                         <span class="icon"><i class="bi bi-person-workspace"></i></span>
                         <span>Enseignants</span>
+                    </a>
+                </li>
+                {{-- Ajout menu Cotation (schéma + saisie) --}}
+                <li class="nav-item mt-2">
+                    <div class="small text-uppercase text-muted px-2 mb-1">Cotation</div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('grading.schemes') ? 'active' : '' }}" href="{{ route('grading.schemes') }}">
+                        <span class="icon"><i class="bi bi-sliders"></i></span>
+                        <span>Schéma</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('grading.entry') ? 'active' : '' }}" href="{{ route('grading.entry') }}">
+                        <span class="icon"><i class="bi bi-clipboard-check"></i></span>
+                        <span>Saisie</span>
                     </a>
                 </li>
                 <li class="nav-item">

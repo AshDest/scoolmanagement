@@ -17,4 +17,7 @@ class Enrollment extends Model
     public function student(): BelongsTo { return $this->belongsTo(Student::class); }
     public function courseOffering(): BelongsTo { return $this->belongsTo(CourseOffering::class); }
     public function grade(): HasOne { return $this->hasOne(Grade::class); }
+
+    // Nouveau: accès aux composantes
+    public function components(): HasOne { return $this->hasOne(GradeComponent::class); }
 }

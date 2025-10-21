@@ -1,4 +1,4 @@
-{{-- Liste Cours: card, header outils, table compacte. --}}
+{{-- Liste Cours: affiche classes/enseignants affectés (badges), garde recherche/suppression existantes. --}}
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-body d-flex flex-wrap gap-2 align-items-center justify-content-between">
         <div class="d-flex align-items-center gap-2">
@@ -31,7 +31,8 @@
                 <th style="width:72px">#</th>
                 <th>Code</th>
                 <th>Titre</th>
-                <th>Crédits</th>
+                <th>Classes</th>
+                <th>Enseignants</th>
                 <th class="text-end" style="width:160px">Actions</th>
             </tr>
             </thead>
@@ -41,7 +42,22 @@
                     <td><span class="badge text-bg-light border">{{ $c->id }}</span></td>
                     <td class="fw-semibold">{{ $c->code }}</td>
                     <td>{{ $c->title }}</td>
-                    <td><span class="badge rounded-pill text-bg-primary-subtle border text-primary">{{ $c->credits }}</span></td>
+                    <td>
+                        @php $cls = $c->classes()->orderBy('name')->pluck('name')->all(); @endphp
+                        @forelse($cls as $n)
+                            <span class="badge rounded-pill text-bg-primary-subtle border text-primary">{{ $n }}</span>
+                        @empty
+                            <span class="text-muted">—</span>
+                        @endforelse
+                    </td>
+                    <td>
+                        @php $tch = $c->teachers()->orderBy('name')->pluck('name')->all(); @endphp
+                        @forelse($tch as $n)
+                            <span class="badge text-bg-light border">{{ $n }}</span>
+                        @empty
+                            <span class="text-muted">—</span>
+                        @endforelse
+                    </td>
                     <td class="text-end">
                         <button
                             class="btn btn-sm btn-outline-secondary"
@@ -62,7 +78,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted py-4">
+                    <td colspan="6" class="text-center text-muted py-4">
                         <i class="bi bi-inbox me-2"></i>Aucun résultat
                     </td>
                 </tr>

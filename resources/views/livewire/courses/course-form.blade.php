@@ -1,4 +1,4 @@
-{{-- Form Cours: modal claire, inputs resserrés. --}}
+{{-- Form Cours: ajout multi-sélection classes et enseignants. --}}
 <div wire:ignore.self class="modal fade" id="courseFormModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content shadow">
@@ -25,10 +25,32 @@
                         <label class="form-label">Description</label>
                         <textarea class="form-control" rows="3" wire:model.defer="description" placeholder="Description du cours..."></textarea>
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label class="form-label">Crédits</label>
                         <input type="number" min="0" max="50" class="form-control @error('credits') is-invalid @enderror" wire:model.defer="credits">
                         @error('credits') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Classes concernées</label>
+                        <select multiple class="form-select @error('class_ids.*') is-invalid @enderror" wire:model.defer="class_ids">
+                            @foreach($allClasses as $cl)
+                                <option value="{{ $cl->id }}">{{ $cl->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="form-text">Maintenir Ctrl/⌘ pour sélection multiple.</div>
+                        @error('class_ids.*') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Enseignants affectés</label>
+                        <select multiple class="form-select @error('teacher_ids.*') is-invalid @enderror" wire:model.defer="teacher_ids">
+                            @foreach($allTeachers as $t)
+                                <option value="{{ $t->id }}">{{ $t->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="form-text">Maintenir Ctrl/⌘ pour sélection multiple.</div>
+                        @error('teacher_ids.*') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="modal-footer bg-light-subtle">

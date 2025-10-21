@@ -1,62 +1,73 @@
-name: CI/CD - Build & Deploy
+name: CI/CD - Deploy (bind-mount)
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build_and_push:
-    name: Build and push image
-    runs-on: [ self-hosted, deploy-vps ]
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU (optional, for multi-arch)
-        uses: docker/setup-qemu-action@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }}
-
-      - name: Build and push image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/school-backend:latest
-            ghcr.io/${{ github.repository_owner }}/school-backend:${{ github.sha }}
-
   deploy:
-    name: Deploy (on self-hosted runner)
-    needs: build_and_push
-    runs-on: [ self-hosted, deploy-vps ]
+    runs-on: [ self-hosted, deploy-vps ]  # <= tes labels de runner
     steps:
-      - name: Checkout (for any deploy artifacts)
-        uses: actions/checkout@v4
-
-      - name: Pull images and restart services
+      - name: Pull latest code on VPS
         run: |
-          # aller dans le dossier où est ton docker-compose prod
-          cd /home/deploy/apps/school || exit 1
+          set -e
+          cd /home/deploy/apps/school
 
-          # s'assurer que docker compose est accessible
-          docker compose version
+          echo "[DEPLOY] Préparer les droits pour Git & Composer…"
+          sudo chown -R deploy:deploy .
+          sudo find storage bootstrap -type d -exec chmod 775 {} \; || true
+          sudo find storage bootstrap -type f -exec chmod 664 {} \; || true
 
-          # pull et redémarrer
-          docker compose pull
+          echo "[DEPLOY] Git fetch/reset…"
+          git fetch --all --prune
+          git reset --hard origin/main
+
+      - name: Composer install (no-dev)
+        run: |
+          set -e
+          cd /home/deploy/apps/school
+          echo "[DEPLOY] Composer (prod)…"
+          docker run --rm -u "$(id -u):$(id -g)" \
+            -v "$PWD":/app -w /app composer:2 \
+            install --no-interaction --prefer-dist --no-dev --optimize-autoloader
+
+      - name: Build front (Vite)
+        run: |
+          set -e
+          cd /home/deploy/apps/school
+          echo "[DEPLOY] Build front…"
+          rm -rf public/build .npm node_modules || true
+          docker run --rm -u "$(id -u):$(id -g)" \
+            -e HOME=/app -e NPM_CONFIG_CACHE=/app/.npm \
+            -v "$PWD":/app -w /app node:20-alpine \
+            sh -lc 'if [ -f package-lock.json ]; then npm ci; else npm install; fi && npm run build'
+
+      - name: Restart services
+        run: |
+          set -e
+          cd /home/deploy/apps/school
+          echo "[DEPLOY] Redémarrage des services…"
           docker compose up -d --remove-orphans
 
-          # optional: run migrations (décommenter si voulu)
-          # docker compose exec -T app php artisan migrate --force
+      - name: Wait for DB healthy
+        run: |
+          set -e
+          cd /home/deploy/apps/school
+          echo "[DEPLOY] Attente MySQL…"
+          # ping MySQL via le conteneur (utilise la variable d'env root si dispo)
+          docker compose exec -T mysql sh -lc 'for i in $(seq 1 30); do mysqladmin ping -h 127.0.0.1 -uroot -p"$MYSQL_ROOT_PASSWORD" --silent && exit 0; echo waiting...; sleep 2; done; exit 1'
+
+      - name: Laravel optimize + migrate
+        run: |
+          set -e
+          cd /home/deploy/apps/school
+          echo "[DEPLOY] Caches & migrations…"
+          docker compose exec -T app sh -lc '
+            chown -R www-data:www-data storage bootstrap/cache public/build &&
+            chmod -R ug+rwX storage bootstrap/cache &&
+            php artisan optimize:clear &&
+            php artisan config:clear &&
+            php artisan route:clear &&
+            php artisan view:clear &&
+            php artisan migrate --force
+          '

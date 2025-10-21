@@ -43,6 +43,10 @@ jobs:
           cd /home/deploy/apps/school
           docker compose up -d --remove-orphans
 
+      - name: Fix permissions
+        run: |
+          ssh $SSH_USER@$SSH_HOST 'cd /var/www/html && sudo chown -R www-data:www-data storage bootstrap/cache && sudo find storage -type d -exec chmod 775 {} \; && sudo find storage -type f -exec chmod 664 {} \; && sudo chmod -R 775 bootstrap/cache'
+
       - name: Attendre MySQL
         run: |
           set -e

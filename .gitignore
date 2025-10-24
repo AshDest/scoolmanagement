@@ -9,6 +9,7 @@
 .env.prod
 docker-compose.local.yml
 docker-compose.prod.yml.bak
+docker-compose.yml
 /.fleet
 /.idea
 /.nova

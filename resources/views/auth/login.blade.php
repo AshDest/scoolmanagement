@@ -140,16 +140,16 @@
                 </form>
             </div>
 
-            <div class="card-footer bg-body p-4">
-                <div class="d-flex justify-content-between align-items-center auth-footer">
-                    @if (Route::has('register'))
-                        <div>Pas de compte ? <a href="{{ route('register') }}">Créer un compte</a></div>
-                    @else
-                        <div></div>
-                    @endif
-                    <div class="small text-muted">© {{ date('Y') }} {{ config('app.name','SchoolManager') }}</div>
-                </div>
-            </div>
+{{--            <div class="card-footer bg-body p-4">--}}
+{{--                <div class="d-flex justify-content-between align-items-center auth-footer">--}}
+{{--                    @if (Route::has('register'))--}}
+{{--                        <div>Pas de compte ? <a href="{{ route('register') }}">Créer un compte</a></div>--}}
+{{--                    @else--}}
+{{--                        <div></div>--}}
+{{--                    @endif--}}
+{{--                    <div class="small text-muted">© {{ date('Y') }} {{ config('app.name','SchoolManager') }}</div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
     </div>
 

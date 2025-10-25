@@ -138,15 +138,6 @@
                         </button>
                     </div>
                 </form>
-
-                <div class="text-center mt-4">
-                    <div class="text-muted small mb-2">Ou continuer avec</div>
-                    <div class="d-flex gap-2 justify-content-center">
-                        <button class="btn btn-outline-secondary social-btn" type="button" disabled><i class="bi bi-google"></i></button>
-                        <button class="btn btn-outline-secondary social-btn" type="button" disabled><i class="bi bi-github"></i></button>
-                        <button class="btn btn-outline-secondary social-btn" type="button" disabled><i class="bi bi-facebook"></i></button>
-                    </div>
-                </div>
             </div>
 
             <div class="card-footer bg-body p-4">

@@ -24,6 +24,12 @@ if [ -f .env ] && ! grep -q '^APP_KEY=' .env; then
   php artisan key:generate --force
 fi
 
+mkdir -p storage/framework/cache
+mkdir -p storage/framework/data
+mkdir -p storage/framework/sessions
+mkdir -p storage/framework/views
+mkdir -p storage/logs storage/app/public bootstrap/cache
+touch storage/logs/laravel.log || true
 chown -R application:application storage bootstrap/cache || true
 chmod -R ug+rwX storage bootstrap/cache || true
 

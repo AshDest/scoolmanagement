@@ -51,7 +51,7 @@ L'API REST complète pour votre application mobile est maintenant **opérationne
    - Copier le contenu de `POSTMAN_COLLECTION.md`
 
 2. **Configurer les variables**
-   - Base URL: `http://102.223.209.57/api/v1`
+   - Base URL: `https://school.ashuzadestin.space/api/v1`
    - Token: (automatiquement rempli après login)
 
 3. **Tester**
@@ -64,12 +64,12 @@ L'API REST complète pour votre application mobile est maintenant **opérationne
 
 ```bash
 # Login
-curl -X POST http://102.223.209.57/api/v1/login \
+curl -X POST https://school.ashuzadestin.space/api/v1/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@example.com","password":"password"}'
 
 # Get Profile (avec token)
-curl -X GET http://102.223.209.57/api/v1/profile \
+curl -X GET https://school.ashuzadestin.space/api/v1/profile \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
@@ -82,7 +82,7 @@ import 'dart:convert';
 
 // Login
 final response = await http.post(
-  Uri.parse('http://102.223.209.57/api/v1/login'),
+  Uri.parse('https://school.ashuzadestin.space/api/v1/login'),
   headers: {'Content-Type': 'application/json'},
   body: json.encode({
     'email': 'user@example.com',
@@ -95,7 +95,7 @@ final token = data['data']['token'];
 
 // Requête authentifiée
 final profile = await http.get(
-  Uri.parse('http://102.223.209.57/api/v1/profile'),
+  Uri.parse('https://school.ashuzadestin.space/api/v1/profile'),
   headers: {
     'Authorization': 'Bearer $token',
     'Content-Type': 'application/json'
@@ -237,7 +237,7 @@ final profile = await http.get(
 
 2. **Tester l'API**
    ```bash
-   curl http://102.223.209.57/api/v1/login
+   curl https://school.ashuzadestin.space/api/v1/login
    ```
 
 3. **Activer CORS si nécessaire** (pour les apps web)
@@ -266,7 +266,7 @@ dependencies:
 ```dart
 class ApiService {
   final Dio _dio = Dio(BaseOptions(
-    baseUrl: 'http://102.223.209.57/api/v1',
+    baseUrl: 'https://school.ashuzadestin.space/api/v1',
     headers: {'Content-Type': 'application/json'},
   ));
 
@@ -294,7 +294,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const api = axios.create({
-  baseURL: 'http://102.223.209.57/api/v1',
+  baseURL: 'https://school.ashuzadestin.space/api/v1',
   headers: {'Content-Type': 'application/json'}
 });
 

@@ -18,7 +18,7 @@ Voici une collection Postman complète pour tester l'API.
   "variable": [
     {
       "key": "base_url",
-      "value": "http://102.223.209.57/api/v1",
+      "value": "https://school.ashuzadestin.space/api/v1",
       "type": "string"
     },
     {
@@ -292,7 +292,7 @@ Voici une collection Postman complète pour tester l'API.
 
 ## Variables d'environnement
 
-- `base_url`: http://102.223.209.57/api/v1
+- `base_url`: https://school.ashuzadestin.space/api/v1
 - `token`: (sera automatiquement rempli après le login)
 
 ## Test rapide

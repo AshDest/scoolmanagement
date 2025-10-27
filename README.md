@@ -1,61 +1,481 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 School Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive school management system built with Laravel 11, Livewire 3, and Bootstrap 5. Features include student management, course enrollment, grading, attendance tracking, and a complete REST API for mobile applications.
 
-## About Laravel
+## 📋 Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Database Setup](#database-setup)
+- [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Project Structure](#project-structure)
+- [Technologies Used](#technologies-used)
+- [License](#license)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Web Application
+- 👥 **User Management** - Admin, Teacher, and Student roles with permissions
+- 📚 **Course Management** - Create and manage courses with offerings
+- 🎓 **Student Management** - Complete student profiles with registration
+- 📝 **Enrollment System** - Automated course enrollment based on class
+- 📊 **Grading System** - Flexible grade schemes and components
+- 📅 **Attendance Tracking** - Track student attendance by course
+- 📄 **Assignments** - Create and manage course assignments
+- 📈 **Dashboard** - Role-specific dashboards with statistics
+- 🎨 **Modern UI** - Clean, responsive interface with dark mode support
 
-## Learning Laravel
+### REST API (Mobile)
+- 🔐 **Token Authentication** - Laravel Sanctum for secure API access
+- 📱 **100+ Endpoints** - Complete CRUD operations for all features
+- 🔄 **Bulk Operations** - Efficient batch processing
+- 📖 **Full Documentation** - Comprehensive API documentation with examples
+- 🚀 **Mobile Ready** - Optimized for Flutter and React Native
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🔧 Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **PHP** >= 8.1
+- **Composer** >= 2.0
+- **Node.js** >= 18.x
+- **NPM** >= 9.x
+- **MySQL** >= 8.0 or **SQLite**
+- **Git**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📥 Installation
 
-## Laravel Sponsors
+### 1. Clone the Repository
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone https://github.com/yourusername/ScoolProject.git
+cd ScoolProject
+```
 
-### Premium Partners
+### 2. Install PHP Dependencies
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+composer install
+```
 
-## Contributing
+### 3. Install Node Dependencies
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+npm install
+```
 
-## Code of Conduct
+### 4. Copy Environment File
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+cp .env.example .env
+```
 
-## Security Vulnerabilities
+### 5. Generate Application Key
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan key:generate
+```
 
-## License
+## ⚙️ Configuration
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Environment Variables
+
+Edit the `.env` file with your configuration:
+
+```env
+# Application
+APP_NAME="School Management"
+APP_ENV=local
+APP_KEY=base64:YOUR_GENERATED_KEY
+APP_DEBUG=true
+APP_URL=http://localhost
+
+# Database (MySQL)
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=school_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Or use SQLite for local development
+# DB_CONNECTION=sqlite
+# DB_DATABASE=/absolute/path/to/database.sqlite
+
+# Mail Configuration (optional)
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+### Database Choice
+
+#### Option 1: MySQL (Recommended for Production)
+
+Create a MySQL database:
+
+```bash
+mysql -u root -p
+CREATE DATABASE school_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+EXIT;
+```
+
+#### Option 2: SQLite (Quick Local Development)
+
+```bash
+touch database/database.sqlite
+```
+
+Update `.env`:
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/ScoolProject/database/database.sqlite
+```
+
+## 🗄️ Database Setup
+
+### Run Migrations
+
+```bash
+php artisan migrate
+```
+
+This will create all necessary tables:
+- users
+- students
+- courses
+- course_offerings
+- enrollments
+- grades
+- grade_components
+- grade_schemes
+- classes
+- attendances
+- assignments
+- files
+- audit_logs
+- roles & permissions (Spatie)
+- personal_access_tokens (Sanctum)
+
+### Seed Database (Optional)
+
+```bash
+php artisan db:seed
+```
+
+This will create:
+- Default admin user
+- Sample roles and permissions
+- Test courses
+- Sample students and enrollments
+
+### Default Credentials
+
+After seeding, you can login with:
+
+```
+Email: admin@example.com
+Password: password
+```
+
+## 🚀 Running the Application
+
+### Development Server
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+The application will be available at: `http://localhost:8000`
+
+### Compile Frontend Assets
+
+#### Development Mode (Watch for changes)
+
+```bash
+npm run dev
+```
+
+#### Production Build
+
+```bash
+npm run build
+```
+
+### Run Both Simultaneously
+
+In one terminal:
+```bash
+php artisan serve
+```
+
+In another terminal:
+```bash
+npm run dev
+```
+
+## 📚 API Documentation
+
+The REST API is fully documented and ready for mobile application integration.
+
+### Access Documentation
+
+- **API Documentation**: `API_DOCUMENTATION.md` - Complete endpoint reference
+- **API README**: `API_README.md` - Quick start guide and examples
+- **Postman Collection**: `POSTMAN_COLLECTION.md` - Ready-to-import collection
+
+### API Base URL
+
+**Local Development:**
+```
+http://localhost:8000/api/v1
+```
+
+**Production:**
+```
+https://school.ashuzadestin.space/api/v1
+```
+
+### Quick API Test
+
+```bash
+# Test login endpoint
+curl -X POST http://localhost:8000/api/v1/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@example.com","password":"password"}'
+```
+
+### API Features
+
+- ✅ Token-based authentication (Laravel Sanctum)
+- ✅ 100+ RESTful endpoints
+- ✅ Pagination on all list endpoints
+- ✅ Advanced filtering and search
+- ✅ Bulk operations support
+- ✅ Role-based access control
+- ✅ Consistent JSON responses
+
+## 🧪 Testing
+
+### Run All Tests
+
+```bash
+php artisan test
+```
+
+### Run Specific Test Suite
+
+```bash
+# Feature tests
+php artisan test --testsuite=Feature
+
+# Unit tests
+php artisan test --testsuite=Unit
+```
+
+### Code Coverage
+
+```bash
+php artisan test --coverage
+```
+
+## 📦 Deployment
+
+### Production Checklist
+
+- [ ] Set `APP_ENV=production` in `.env`
+- [ ] Set `APP_DEBUG=false` in `.env`
+- [ ] Configure production database
+- [ ] Set up SSL/HTTPS
+- [ ] Configure mail server
+- [ ] Run `composer install --optimize-autoloader --no-dev`
+- [ ] Run `npm run build`
+- [ ] Run `php artisan config:cache`
+- [ ] Run `php artisan route:cache`
+- [ ] Run `php artisan view:cache`
+- [ ] Set up cron job for scheduled tasks
+- [ ] Configure queue workers
+- [ ] Set proper file permissions
+
+### Server Requirements
+
+```bash
+# Set permissions
+chmod -R 755 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+
+# Web server should point to /public directory
+# Example Nginx config:
+root /var/www/school/public;
+```
+
+### Optimization Commands
+
+```bash
+# Cache configuration
+php artisan config:cache
+
+# Cache routes
+php artisan route:cache
+
+# Cache views
+php artisan view:cache
+
+# Optimize autoloader
+composer dump-autoload --optimize
+```
+
+### Scheduled Tasks (Cron)
+
+Add to crontab:
+
+```bash
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+### Queue Workers (Optional)
+
+If using queues, set up supervisor:
+
+```bash
+php artisan queue:work --daemon
+```
+
+## 📁 Project Structure
+
+```
+ScoolProject/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── API/              # REST API Controllers
+│   │   │   │   ├── AuthController.php
+│   │   │   │   ├── StudentController.php
+│   │   │   │   ├── CourseController.php
+│   │   │   │   └── ...
+│   │   │   └── HomeController.php
+│   │   └── Middleware/
+│   │       └── EnsureRole.php    # Role-based access
+│   ├── Livewire/                 # Livewire Components
+│   │   ├── Students/
+│   │   ├── Courses/
+│   │   ├── Grades/
+│   │   ├── Dashboards/
+│   │   └── ...
+│   ├── Models/                   # Eloquent Models
+│   │   ├── User.php
+│   │   ├── Student.php
+│   │   ├── Course.php
+│   │   ├── Grade.php
+│   │   └── ...
+│   └── Policies/
+│       └── GradePolicy.php
+├── database/
+│   ├── migrations/               # Database migrations
+│   ├── seeders/                  # Database seeders
+│   └── factories/                # Model factories
+├── resources/
+│   ├── views/                    # Blade templates
+│   │   ├── layouts/
+│   │   └── livewire/
+│   ├── js/                       # JavaScript files
+│   │   └── app.js
+│   ├── sass/                     # SASS styles
+│   │   └── app.scss
+│   └── css/
+├── routes/
+│   ├── web.php                   # Web routes
+│   ├── api.php                   # API routes
+│   └── console.php
+├── tests/
+│   ├── Feature/                  # Feature tests
+│   └── Unit/                     # Unit tests
+├── public/                       # Public assets
+├── storage/                      # File storage
+├── API_DOCUMENTATION.md          # API docs
+├── API_README.md                 # API guide
+├── POSTMAN_COLLECTION.md         # Postman collection
+└── README.md                     # This file
+```
+
+## 🛠️ Technologies Used
+
+### Backend
+- **Laravel 11** - PHP framework
+- **Livewire 3** - Full-stack framework for Laravel
+- **Spatie Laravel Permission** - Role and permission management
+- **Laravel Sanctum** - API authentication
+
+### Frontend
+- **Bootstrap 5** - CSS framework
+- **Bootstrap Icons** - Icon library
+- **Alpine.js** - Minimal JavaScript framework (via Livewire)
+- **Vite** - Frontend build tool
+
+### Database
+- **MySQL** - Primary database (production)
+- **SQLite** - Alternative for development
+- **Eloquent ORM** - Database abstraction
+
+### Development Tools
+- **Composer** - PHP dependency manager
+- **NPM** - Node package manager
+- **Git** - Version control
+
+## 🔐 Security
+
+- CSRF protection on all forms
+- SQL injection protection via Eloquent
+- XSS protection
+- Password hashing with bcrypt
+- Token-based API authentication
+- Role-based access control
+- Input validation on all requests
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Authors
+
+- **Your Name** - Initial work
+
+## 🙏 Acknowledgments
+
+- Laravel community
+- Livewire team
+- Bootstrap team
+- All contributors
+
+## 📞 Support
+
+For support, email support@example.com or open an issue in the repository.
+
+## 🔗 Links
+
+- **Production**: https://school.ashuzadestin.space
+- **API Documentation**: See `API_DOCUMENTATION.md`
+- **Bug Reports**: [GitHub Issues](https://github.com/yourusername/ScoolProject/issues)
+
+---
+
+**Made with ❤️ using Laravel**
+

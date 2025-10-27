@@ -2,7 +2,7 @@
 
 ## Base URL
 ```
-http://102.223.209.57/api/v1
+https://school.ashuzadestin.space/api/v1
 ```
 
 ## Authentication
@@ -669,7 +669,7 @@ Retourne des statistiques selon le rôle de l'utilisateur:
 ```dart
 // Login
 final response = await http.post(
-  Uri.parse('http://102.223.209.57/api/v1/login'),
+  Uri.parse('https://school.ashuzadestin.space/api/v1/login'),
   headers: {'Content-Type': 'application/json'},
   body: json.encode({
     'email': 'user@example.com',
@@ -680,7 +680,7 @@ final response = await http.post(
 // Authenticated Request
 final token = 'YOUR_TOKEN';
 final response = await http.get(
-  Uri.parse('http://102.223.209.57/api/v1/profile'),
+  Uri.parse('https://school.ashuzadestin.space/api/v1/profile'),
   headers: {
     'Authorization': 'Bearer $token',
     'Content-Type': 'application/json'
@@ -691,7 +691,7 @@ final response = await http.get(
 ### React Native (Axios)
 ```javascript
 // Login
-const response = await axios.post('http://102.223.209.57/api/v1/login', {
+const response = await axios.post('https://school.ashuzadestin.space/api/v1/login', {
   email: 'user@example.com',
   password: 'password123'
 });
@@ -700,7 +700,7 @@ const response = await axios.post('http://102.223.209.57/api/v1/login', {
 const token = response.data.data.token;
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-const profile = await axios.get('http://102.223.209.57/api/v1/profile');
+const profile = await axios.get('https://school.ashuzadestin.space/api/v1/profile');
 ```
 
 ---

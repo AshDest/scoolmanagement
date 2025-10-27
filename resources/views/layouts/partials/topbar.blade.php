@@ -20,33 +20,31 @@
             </button>
 
             @auth
-                <div class="dropdown">
+                <div class="profile-dropdown" id="profileDropdownContainer">
                     <button
-                        class="btn btn-outline-secondary d-flex align-items-center gap-2 px-2 py-1 rounded-3 dropdown-toggle"
-                        id="profileDropdown"
+                        class="btn btn-outline-secondary d-flex align-items-center gap-2 px-2 py-1 rounded-3"
+                        id="profileDropdownBtn"
                         type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        aria-haspopup="true"
                         title="Profil"
                     >
                         <img class="avatar" src="https://api.dicebear.com/7.x/initials/svg?seed={{ urlencode(auth()->user()->name ?? 'U') }}" alt="avatar">
+                        <i class="bi bi-chevron-down" style="font-size: 0.75rem;"></i>
                     </button>
 
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="profileDropdown" style="min-width: 260px;">
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm profile-menu" id="profileMenu" style="min-width: 260px; position: absolute; top: calc(100% + 0.5rem); right: 0; background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 0.5rem; z-index: 1060; list-style: none; margin: 0; padding: 0.5rem; display: none;">
                         <li class="px-3 py-2">
                             <div class="small text-muted">{{ auth()->user()->email }}</div>
                             <div class="fw-semibold text-truncate" style="max-width:200px">{{ auth()->user()->name }}</div>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('results.me') }}">
-                                <i class="bi bi-speedometer2 me-2"></i> Mon tableau de bord
+                            <a class="dropdown-item d-flex align-items-center px-3 py-2" href="{{ route('results.me') }}" style="border-radius: 0.5rem; cursor: pointer; color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="bi bi-speedometer2"></i> Mon tableau de bord
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('roles.index') }}">
-                                <i class="bi bi-shield-lock me-2"></i> Rôles et accès
+                            <a class="dropdown-item d-flex align-items-center px-3 py-2" href="{{ route('roles.index') }}" style="border-radius: 0.5rem; cursor: pointer; color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="bi bi-shield-lock"></i> Rôles et accès
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
@@ -74,16 +72,49 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Sidebar mobile toggle
-        const btn = document.getElementById('btnSidebarToggle');
+        // ===== Sidebar mobile toggle =====
+        const btnSidebarToggle = document.getElementById('btnSidebarToggle');
         const sidebar = document.getElementById('appSidebar');
-        if (btn && sidebar) btn.addEventListener('click', () => sidebar.classList.toggle('show'));
+        if (btnSidebarToggle && sidebar) {
+            btnSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('show'));
+        }
 
-        // Theme toggle (affecte aussi la sidebar via CSS variables dans le layout)
+        // ===== Profile Dropdown Menu =====
+        const profileDropdownBtn = document.getElementById('profileDropdownBtn');
+        const profileMenu = document.getElementById('profileMenu');
+        const profileDropdownContainer = document.getElementById('profileDropdownContainer');
+
+        if (profileDropdownBtn && profileMenu) {
+            // Ouvrir/Fermer le menu
+            profileDropdownBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (profileMenu.style.display === 'none' || profileMenu.style.display === '') {
+                    profileMenu.style.display = 'block';
+                } else {
+                    profileMenu.style.display = 'none';
+                }
+            });
+
+            // Fermer le menu au clic sur un lien
+            profileMenu.querySelectorAll('a, form').forEach(item => {
+                item.addEventListener('click', () => {
+                    profileMenu.style.display = 'none';
+                });
+            });
+
+            // Fermer le menu au clic en dehors
+            document.addEventListener('click', (e) => {
+                if (!profileDropdownContainer.contains(e.target)) {
+                    profileMenu.style.display = 'none';
+                }
+            });
+        }
+
+        // ===== Theme toggle =====
         const themeBtn = document.getElementById('btnThemeToggle');
         const html = document.documentElement;
         const lightIcon = document.querySelector('.theme-icon-light');
-        const darkIcon  = document.querySelector('.theme-icon-dark');
+        const darkIcon = document.querySelector('.theme-icon-dark');
 
         function applyTheme(next) {
             html.setAttribute('data-bs-theme', next);
@@ -94,6 +125,7 @@
                 darkIcon.classList.toggle('d-none', isLight);
             }
         }
+
         const savedTheme = localStorage.getItem('bs-theme') || 'light';
         applyTheme(savedTheme);
 

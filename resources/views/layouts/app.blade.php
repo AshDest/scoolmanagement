@@ -41,9 +41,10 @@
 
         .content { background: var(--bs-body-bg); }
 
-        /* Topbar “glass” */
+        /* Topbar "glass" */
         .topbar {
             position: sticky; top: 0; z-index: 1030;
+            overflow: visible;
             backdrop-filter: saturate(180%) blur(10px);
             background-color: color-mix(in srgb, var(--bs-body-bg) 75%, transparent);
             border-bottom: 1px solid var(--bs-border-color);
@@ -57,8 +58,11 @@
         }
         .icon-btn:hover { background: var(--bs-secondary-bg); }
         .avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: var(--bs-secondary-bg); }
-        .dropdown-menu { border-radius: .75rem; padding: .5rem; }
-        .dropdown-item { border-radius: .5rem; }
+        .profile-dropdown { position: relative; }
+        .profile-menu { border-radius: .75rem; padding: .5rem; z-index: 1060; box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+        .profile-menu.d-none { display: none !important; }
+        .dropdown-item { border-radius: .5rem; cursor: pointer; }
+        .dropdown-item:hover { background: var(--bs-secondary-bg); }
         .dropdown-item:active { background: var(--bs-primary); color: #fff; }
 
         @media (max-width: 991.98px) {
@@ -80,7 +84,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 @livewireScripts
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

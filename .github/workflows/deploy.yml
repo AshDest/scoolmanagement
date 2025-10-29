@@ -63,5 +63,6 @@ jobs:
             cd /opt/scoolproject
             docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" -p "${{ secrets.GHCR_TOKEN }}"
             docker compose pull
-            docker compose up -d
+            docker rm -f scool-app 2>/dev/null || true
+            docker compose up -d --no-deps --force-recreate app
             docker image prune -f

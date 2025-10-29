@@ -6,7 +6,7 @@ services:
         container_name: laravel-app
         env_file: .env
         ports:
-            - "8080:80"     # -> accéder à Laravel via http://localhost:8080 ou http://<VPS_IP>:8080
+            - "127.0.0.1:8080:80"     # -> accéder à Laravel via http://localhost:8080 ou http://<VPS_IP>:8080
         depends_on:
             db:
                 condition: service_healthy

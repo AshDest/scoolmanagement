@@ -101,6 +101,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                        <span class="icon"><i class="bi bi-person-circle"></i></span>
+                        <span>Utilisateurs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('results.*') ? 'active' : '' }}" href="{{ route('results.me') }}">
                         <span class="icon"><i class="bi bi-graph-up"></i></span>
                         <span>Mes résultats</span>

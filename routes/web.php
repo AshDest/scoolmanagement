@@ -7,6 +7,7 @@ use App\Livewire\Roles\RoleIndex;
 use App\Livewire\Students\StudentIndex;
 use App\Livewire\Students\StudentProfile;
 use App\Livewire\Teachers\TeacherIndex;
+use App\Livewire\Users\UserIndex;
 use App\Livewire\Dashboards\AdminDashboard;
 use App\Livewire\Dashboards\TeacherDashboard;
 use App\Livewire\Dashboards\StudentDashboard;
@@ -39,6 +40,8 @@ Route::middleware(['auth','ensure.role:admin'])->group(function () {
     Route::get('/grades', GradeIndex::class)->name('grades.index');
 
     Route::get('/roles', RoleIndex::class)->name('roles.index');
+    Route::get('/users', UserIndex::class)->name('users.index');
+
 
     Route::get('/results/me', StudentResults::class)->name('results.me');
 
@@ -55,4 +58,3 @@ Route::middleware(['auth','ensure.role:admin'])->group(function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

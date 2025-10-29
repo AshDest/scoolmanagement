@@ -23,6 +23,14 @@
                             @error('last_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.defer="email" placeholder="etudiant@example.com">
+                            @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            @if(!$id)
+                            <div class="form-text">Un compte sera créé avec mot de passe: <strong>password123</strong></div>
+                            @endif
+                        </div>
+                        <div class="col-md-6">
                             <label class="form-label">Classe</label>
                             <select class="form-select @error('class_id') is-invalid @enderror" wire:model.defer="class_id">
                                 <option value="">Sélectionner…</option>

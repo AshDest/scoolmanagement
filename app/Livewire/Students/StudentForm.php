@@ -20,6 +20,9 @@ class StudentForm extends Component
     public ?string $dob = null;
     public string $registration_number = '';
     public string $email = '';
+    public string $address = '';
+    public string $tutor_name = '';
+    public string $tutor_phone = '';
     public array $extra = [];
 
     #[On('open-student-form')]
@@ -36,9 +39,12 @@ class StudentForm extends Component
             $this->dob = optional($s->dob)->format('Y-m-d');
             $this->registration_number = $s->registration_number;
             $this->email = $s->user?->email ?? '';
+            $this->address = $s->address ?? '';
+            $this->tutor_name = $s->tutor_name ?? '';
+            $this->tutor_phone = $s->tutor_phone ?? '';
             $this->extra = $s->extra ?? [];
         } else {
-            $this->reset(['id','user_id','class_id','first_name','last_name','dob','registration_number','email','extra']);
+            $this->reset(['id','user_id','class_id','first_name','last_name','dob','registration_number','email','address','tutor_name','tutor_phone','extra']);
         }
     }
 
@@ -51,6 +57,9 @@ class StudentForm extends Component
             'dob' => ['nullable','date'],
             'registration_number' => ['required','string','max:255', Rule::unique('students','registration_number')->ignore($this->id)],
             'email' => ['required','email','max:255', Rule::unique('users','email')->ignore($this->user_id)],
+            'address' => ['nullable','string','max:500'],
+            'tutor_name' => ['nullable','string','max:255'],
+            'tutor_phone' => ['nullable','string','max:20'],
         ]);
         $data['extra'] = $this->extra ?: null;
 

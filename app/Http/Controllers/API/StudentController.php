@@ -44,6 +44,9 @@ class StudentController extends Controller
                     'last_name' => $student->last_name,
                     'registration_number' => $student->registration_number,
                     'dob' => $student->dob,
+                    'address' => $student->address,
+                    'tutor_name' => $student->tutor_name,
+                    'tutor_phone' => $student->tutor_phone,
                     'user' => [
                         'id' => $student->user->id,
                         'name' => $student->user->name,
@@ -78,6 +81,9 @@ class StudentController extends Controller
             'registration_number' => 'required|string|unique:students,registration_number',
             'dob' => 'required|date',
             'class_id' => 'nullable|exists:classes,id',
+            'address' => 'nullable|string|max:500',
+            'tutor_name' => 'nullable|string|max:255',
+            'tutor_phone' => 'nullable|string|max:20',
         ]);
 
         if ($validator->fails()) {
@@ -104,6 +110,9 @@ class StudentController extends Controller
             'registration_number' => $request->registration_number,
             'dob' => $request->dob,
             'class_id' => $request->class_id,
+            'address' => $request->address,
+            'tutor_name' => $request->tutor_name,
+            'tutor_phone' => $request->tutor_phone,
             'extra' => $request->extra ?? [],
         ]);
 
@@ -138,6 +147,9 @@ class StudentController extends Controller
                 'last_name' => $student->last_name,
                 'registration_number' => $student->registration_number,
                 'dob' => $student->dob,
+                'address' => $student->address,
+                'tutor_name' => $student->tutor_name,
+                'tutor_phone' => $student->tutor_phone,
                 'extra' => $student->extra,
                 'user' => [
                     'id' => $student->user->id,
@@ -174,6 +186,9 @@ class StudentController extends Controller
             'registration_number' => 'sometimes|string|unique:students,registration_number,' . $id,
             'dob' => 'sometimes|date',
             'class_id' => 'nullable|exists:classes,id',
+            'address' => 'nullable|string|max:500',
+            'tutor_name' => 'nullable|string|max:255',
+            'tutor_phone' => 'nullable|string|max:20',
         ]);
 
         if ($validator->fails()) {
@@ -185,7 +200,7 @@ class StudentController extends Controller
         }
 
         $student->update($request->only([
-            'first_name', 'last_name', 'registration_number', 'dob', 'class_id', 'extra'
+            'first_name', 'last_name', 'registration_number', 'dob', 'class_id', 'address', 'tutor_name', 'tutor_phone', 'extra'
         ]));
 
         return response()->json([

@@ -133,6 +133,10 @@ Authorization: Bearer {token}
       "first_name": "John",
       "last_name": "Doe",
       "registration_number": "STU001",
+      "dob": "2005-01-15",
+      "address": "123 Main Street, Kinshasa",
+      "tutor_name": "Jane Doe",
+      "tutor_phone": "+243 XXX XXX XXX",
       "user": {
         "id": 1,
         "name": "John Doe",
@@ -169,7 +173,10 @@ Authorization: Bearer {token}
   "password": "password123",
   "registration_number": "STU001",
   "dob": "2005-01-15",
-  "class_id": 1
+  "class_id": 1,
+  "address": "123 Main Street, Kinshasa",
+  "tutor_name": "Jane Doe",
+  "tutor_phone": "+243 XXX XXX XXX"
 }
 ```
 

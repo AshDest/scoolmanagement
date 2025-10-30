@@ -50,6 +50,43 @@
                             <input type="text" class="form-control @error('registration_number') is-invalid @enderror" wire:model.defer="registration_number" placeholder="REG-0001">
                             @error('registration_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
+
+                        <div class="col-12">
+                            <hr class="my-3">
+                            <h6 class="text-muted mb-3">
+                                <i class="bi bi-geo-alt me-2"></i>Informations de contact
+                            </h6>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Adresse</label>
+                            <textarea class="form-control @error('address') is-invalid @enderror" wire:model.defer="address" rows="2" placeholder="Adresse complète de l'étudiant"></textarea>
+                            @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="col-12">
+                            <hr class="my-3">
+                            <h6 class="text-muted mb-3">
+                                <i class="bi bi-person-badge me-2"></i>Informations du tuteur
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Nom du tuteur</label>
+                            <input type="text" class="form-control @error('tutor_name') is-invalid @enderror" wire:model.defer="tutor_name" placeholder="Nom complet du tuteur">
+                            @error('tutor_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Numéro du tuteur</label>
+                            <input type="text" class="form-control @error('tutor_phone') is-invalid @enderror" wire:model.defer="tutor_phone" placeholder="+243 XXX XXX XXX">
+                            @error('tutor_phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="col-12">
+                            <hr class="my-3">
+                        </div>
+
                         <div class="col-12">
                             <label class="form-label">Note interne</label>
                             <input type="text" class="form-control" placeholder="Information complémentaire…" wire:model.defer="extra.note">

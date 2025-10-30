@@ -13,7 +13,7 @@ class Student extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id','class_id','first_name','last_name','dob','registration_number','extra'
+        'user_id','class_id','first_name','last_name','dob','registration_number','address','tutor_name','tutor_phone','extra'
     ];
     protected $casts = [
         'dob' => 'date',
